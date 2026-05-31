@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kitaben by Arora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body { font-family: 'Nunito', sans-serif; background: #FFFBF5; color: #2A1F14; }
+
+    /* Hero */
+    .hero { background: #1C3A2E; padding: 2.5rem 2.5rem 2rem; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); color: #F5EBDA; line-height: 1.15; margin-bottom: .4rem; }
+    .hero h1 em { font-style: italic; color: #C8A96A; }
+    .hero p { font-size: 14px; color: #92B0A4; max-width: 440px; line-height: 1.6; margin-bottom: 1.5rem; }
+    .hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.1); }
+    .stat-n { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #C8A96A; display: block; }
+    .stat-l { font-size: 11px; color: #7A9E96; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* Membership bar */
+    .mem-bar { background: #F5EBDA; border-bottom: 1px solid #E2D0B0; padding: .75rem 2.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; font-size: 13px; color: #4A3520; }
+    .mem-bar strong { color: #1C3A2E; }
+
+    /* Controls */
+    .controls { padding: .75rem 2.5rem; border-bottom: 1px solid #EDE0C8; display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; background: #FFFBF5; }
+    .btn { font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 600; padding: 4px 13px; border-radius: 16px; border: 1.5px solid transparent; background: transparent; color: #6B5033; cursor: pointer; transition: all .15s; }
+    .btn:hover { background: #F0E4CC; }
+    .btn.active { background: #1C3A2E; color: #F5EBDA; border-color: #1C3A2E; }
+    .search-wrap { margin-left: auto; position: relative; }
+    .search-wrap input { font-family: 'Nunito', sans-serif; font-size: 13px; padding: 5px 10px 5px 28px; border: 1.5px solid #D4C0A0; border-radius: 16px; background: white; color: #2A1F14; width: 180px; outline: none; }
+    .search-wrap input:focus { border-color: #1C3A2E; }
+    .search-wrap::before { content: '🔍'; position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 12px; pointer-events: none; }
+
+    /* Genre row */
+    .genre-bar { padding: .6rem 2.5rem; border-bottom: 1px solid #EDE0C8; display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+    .genre-label { font-size: 12px; color: #8A7055; margin-right: .25rem; }
+
+    /* Main */
+    main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+    .sec-head { display: flex; align-items: baseline; gap: .6rem; margin-bottom: 1rem; }
+    .sec-head h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+    .cnt { font-size: 12px; color: #8A7055; background: #EDE0C8; padding: 2px 10px; border-radius: 10px; }
+
+    /* Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; }
+
+    .card { background: white; border: 1px solid #EDE0C8; border-radius: 12px; overflow: hidden; transition: transform .15s; }
+    .card:hover { transform: translateY(-2px); }
+
+    .cover { height: 108px; display: flex; align-items: center; justify-content: center; }
+    .cover img { height: 90px; width: 62px; object-fit: cover; border-radius: 3px 6px 6px 3px; display: block; }
+    .cover img.err { display: none; }
+    .spine { width: 62px; height: 90px; border-radius: 3px 6px 6px 3px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; position: relative; box-shadow: 2px 2px 8px rgba(0,0,0,.15); }
+    .spine::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: rgba(0,0,0,.18); border-radius: 3px 0 0 3px; }
+    .spine-emoji { font-size: 1.5rem; }
+    .spine-title { font-size: 7px; font-weight: 700; color: rgba(255,255,255,.9); text-align: center; padding: 0 6px; line-height: 1.2; }
+
+    .body { padding: .75rem .9rem .9rem; }
+    .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+    .tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 9px; }
+    .t-available { background: #EAF3DE; color: #27500A; }
+    .t-borrowed  { background: #FAEEDA; color: #633806; }
+    .t-reserved  { background: #E6F1FB; color: #0C447C; }
+    .t-new       { background: #EEEDFE; color: #3C3489; }
+    .t-age       { background: #F1EFE8; color: #444441; }
+
+    .book-title  { font-family: 'Playfair Display', serif; font-size: .9rem; color: #2A1F14; margin-bottom: 2px; line-height: 1.3; }
+    .book-author { font-size: 11px; color: #8A7055; margin-bottom: 5px; }
+    .book-desc   { font-size: 11px; color: #6B5033; line-height: 1.5; }
+
+    .empty { grid-column: 1/-1; text-align: center; padding: 3rem; font-size: 14px; color: #8A7055; }
+    .error { grid-column: 1/-1; text-align: center; padding: 3rem; font-size: 14px; color: #993C1D; }
+
+    @media (max-width: 560px) {
+      .hero, .mem-bar, .controls, .genre-bar { padding-left: 1rem; padding-right: 1rem; }
+      main { padding: 1rem .75rem 3rem; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .search-wrap input { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Kitaben <em>by</em> Arora</h1>
+  <p>A neighborhood home library for kids, teens, and adults. Borrow great books this summer.</p>
+  <div class="hero-stats">
+    <div><span class="stat-n" id="total-n">—</span><span class="stat-l">Books</span></div>
+    <div><span class="stat-n">₹50</span><span class="stat-l">Per month</span></div>
+    <div><span class="stat-n">₹500</span><span class="stat-l">Deposit · refundable</span></div>
+    <div><span class="stat-n">2 weeks</span><span class="stat-l">Borrow period</span></div>
+  </div>
+</header>
+
+<div class="mem-bar">
+  <span>📚 <strong>1 book</strong> at a time per member</span>
+  <span>✓ <strong>No late fees</strong> — ever</span>
+  <span>📍 [Your area], Delhi &nbsp;·&nbsp; 10am–12pm &amp; 4–6pm</span>
+</div>
+
+<div class="controls">
+  <button class="btn active" data-age="all"    onclick="setAge(this)">All</button>
+  <button class="btn"        data-age="kids"   onclick="setAge(this)">Kids (5–10)</button>
+  <button class="btn"        data-age="middle" onclick="setAge(this)">Middle (10–13)</button>
+  <button class="btn"        data-age="teen"   onclick="setAge(this)">Teens (13+)</button>
+  <button class="btn"        data-age="adult"  onclick="setAge(this)">Adults</button>
+  <div class="search-wrap">
+    <input type="text" id="srch" placeholder="Search…" oninput="render()">
+  </div>
+</div>
+
+<div class="genre-bar">
+  <span class="genre-label">Genre:</span>
+  <button class="btn active" data-genre="all" onclick="setGenre(this)">All</button>
+</div>
+
+<main>
+  <div class="sec-head">
+    <h2>Collection</h2>
+    <span class="cnt" id="cnt">Loading…</span>
+  </div>
+  <div class="grid" id="grid"><div class="empty">Loading books…</div></div>
+</main>
+
+<script>
+  let books = [], ageFilter = 'all', genreFilter = 'all';
+
+  const ageLabel = a => ({ kids: '5–10', middle: '10–13', teen: '13+', adult: 'Adult' }[a] || a);
+
+  const statusTag = s => {
+    const map = { available: ['t-available', 'Available'], borrowed: ['t-borrowed', 'Borrowed'], reserved: ['t-reserved', 'Reserved'] };
+    const [cls, label] = map[s] || ['t-available', s];
+    return `<span class="tag ${cls}">${label}</span>`;
+  };
+
+  function buildGenreFilters() {
+    const genres = [...new Set(books.map(b => b.genre))].sort();
+    const bar = document.querySelector('.genre-bar');
+    genres.forEach(g => {
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.dataset.genre = g;
+      btn.textContent = g;
+      btn.onclick = function () { setGenre(this); };
+      bar.appendChild(btn);
+    });
+  }
+
+  function render() {
+    const q = document.getElementById('srch').value.toLowerCase().trim();
+    const filtered = books.filter(b => {
+      const matchAge   = ageFilter   === 'all' || b.ageGroup === ageFilter;
+      const matchGenre = genreFilter === 'all' || b.genre    === genreFilter;
+      const matchQ     = !q || b.title.toLowerCase().includes(q)
+                            || b.author.toLowerCase().includes(q)
+                            || b.description.toLowerCase().includes(q);
+      return matchAge && matchGenre && matchQ;
+    });
+
+    document.getElementById('cnt').textContent = filtered.length + (filtered.length === 1 ? ' book' : ' books');
+
+    const grid = document.getElementById('grid');
+    if (!filtered.length) { grid.innerHTML = '<div class="empty">No books match — try a different filter or search.</div>'; return; }
+
+    grid.innerHTML = filtered.map(b => {
+      const shortTitle = b.title.length > 18 ? b.title.slice(0, 16) + '…' : b.title;
+      const fallback   = `<div class="spine" style="background:${b.coverColor}"><div class="spine-emoji">${b.emoji}</div><div class="spine-title">${shortTitle}</div></div>`;
+      const coverHtml  = b.imageUrl
+        ? `<img src="${b.imageUrl}" alt="${b.title}" onerror="this.classList.add('err');this.nextElementSibling.style.display='flex'">${fallback.replace('display:none','').replace('<div class="spine"', '<div class="spine" style="background:${b.coverColor};display:none"')}`
+        : fallback;
+
+      return `<div class="card">
+        <div class="cover" style="background:${b.coverColor}18">
+          ${b.imageUrl
+            ? `<img src="${b.imageUrl}" alt="${b.title}" onerror="this.classList.add('err');this.nextElementSibling.style.display='flex'">
+               <div class="spine" style="background:${b.coverColor};display:none"><div class="spine-emoji">${b.emoji}</div><div class="spine-title">${shortTitle}</div></div>`
+            : `<div class="spine" style="background:${b.coverColor}"><div class="spine-emoji">${b.emoji}</div><div class="spine-title">${shortTitle}</div></div>`
+          }
+        </div>
+        <div class="body">
+          <div class="tags">
+            ${statusTag(b.status)}
+            ${b.isNew ? '<span class="tag t-new">New</span>' : ''}
+            <span class="tag t-age">${ageLabel(b.ageGroup)}</span>
+          </div>
+          <div class="book-title">${b.title}</div>
+          <div class="book-author">${b.author}</div>
+          <div class="book-desc">${b.description}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function setAge(btn) {
+    ageFilter = btn.dataset.age;
+    document.querySelectorAll('[data-age]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  function setGenre(btn) {
+    genreFilter = btn.dataset.genre;
+    document.querySelectorAll('[data-genre]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  fetch('books.json')
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(data => {
+      books = data.books;
+      document.getElementById('total-n').textContent = books.length;
+      buildGenreFilters();
+      render();
+    })
+    .catch(() => {
+      document.getElementById('grid').innerHTML = '<div class="error">Could not load books.json — make sure it is in the same folder as index.html.</div>';
+    });
+</script>
+</body>
+</html>
