@@ -1497,6 +1497,48 @@
       "isNew": false,
       "addedOn": "2026-06-02",
       "imageUrl": ""
+    },
+    {
+      "id": "108",
+      "title": "The Courage to Be Disliked",
+      "author": "Ichiro Kishimi, Fumitake Koga",
+      "genre": "Self-Help",
+      "ageGroup": "adult",
+      "description": "A thought-provoking exploration of Adlerian psychology that challenges readers to break free from past limitations and live a happier, more authentic life.",
+      "emoji": "🧠",
+      "coverColor": "#4F86C6",
+      "status": "available",
+      "isNew": false,
+      "addedOn": "2026-06-02",
+      "imageUrl": "https://covers.openlibrary.org/b/isbn/9781760630492-M.jpg"
+    },
+    {
+      "id": "109",
+      "title": "What Got You Here Won't Get You There",
+      "author": "Marshall Goldsmith",
+      "genre": "Business",
+      "ageGroup": "adult",
+      "description": "A leadership classic that identifies common habits preventing successful professionals from reaching the next level in their careers.",
+      "emoji": "📈",
+      "coverColor": "#D95F02",
+      "status": "available",
+      "isNew": false,
+      "addedOn": "2026-06-02",
+      "imageUrl": "https://covers.openlibrary.org/b/isbn/9781401301309-M.jpg"
+    },
+    {
+      "id": "110",
+      "title": "The Bird with Golden Wings",
+      "author": "Sudha Murty",
+      "genre": "Children's Stories",
+      "ageGroup": "middle",
+      "description": "A collection of engaging stories inspired by Indian folklore and values, encouraging kindness, wisdom, and curiosity in young readers.",
+      "emoji": "🕊️",
+      "coverColor": "#F2C94C",
+      "status": "available",
+      "isNew": false,
+      "addedOn": "2026-06-02",
+      "imageUrl": "https://covers.openlibrary.org/b/isbn/9780143442318-M.jpg"
     }
   ]
 }
